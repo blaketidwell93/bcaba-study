@@ -3,7 +3,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: one narrow study column (phone first), sticky header with tab strip; data-sheet details (graph grid, mono codes, highlighter page chips). */
+/* Layout: one narrow study column (phone first), sticky header with tab strip; data-sheet details (graph grid, mono codes, highlighter page chips).
+   Color: teal does the work (buttons, links, codes); rose is the signature touch (wordmark, active tab, progress, scores, her class units). */
 :root {
   --paper: #f5f7f6;
   --sheet: #ffffff;
@@ -14,6 +15,8 @@
   --accent: #0b6e69;
   --accent-soft: #e2f1ef;
   --on-accent: #ffffff;
+  --rose: #b02a62;
+  --rose-soft: #fbe9f0;
   --hi: #ffe45c;
   --hi-ink: #15232d;
   --good: #1d7a3a;
@@ -30,14 +33,14 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #0e1518; --sheet: #142026; --ink: #e5ecea; --muted: #94a5aa; --rule: #26343b; --grid: #1b282e;
-    --accent: #52c3ba; --accent-soft: #163331; --on-accent: #0b1a1a; --hi: #e9d54f; --hi-ink: #15232d;
+    --accent: #52c3ba; --accent-soft: #163331; --on-accent: #0b1a1a; --rose: #f29bbf; --rose-soft: #2a1c25; --hi: #e9d54f; --hi-ink: #15232d;
     --good: #63c983; --good-soft: #17301f; --warn: #e5a948; --warn-soft: #33270f; --bad: #f2776d; --bad-soft: #3a1a18;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #0e1518; --sheet: #142026; --ink: #e5ecea; --muted: #94a5aa; --rule: #26343b; --grid: #1b282e;
-  --accent: #52c3ba; --accent-soft: #163331; --on-accent: #0b1a1a; --hi: #e9d54f; --hi-ink: #15232d;
+  --accent: #52c3ba; --accent-soft: #163331; --on-accent: #0b1a1a; --rose: #f29bbf; --rose-soft: #2a1c25; --hi: #e9d54f; --hi-ink: #15232d;
   --good: #63c983; --good-soft: #17301f; --warn: #e5a948; --warn-soft: #33270f; --bad: #f2776d; --bad-soft: #3a1a18;
   color-scheme: dark;
 }
@@ -54,6 +57,7 @@ p { margin: 0; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+::selection { background: var(--rose-soft); color: var(--ink); }
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .muted { color: var(--muted); }
 .small { font-size: 0.875rem; }
@@ -64,12 +68,12 @@ button { cursor: pointer; }
 .top-inner { max-width: 880px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px 0; }
 .brand { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .brand h1 { font-size: 1.2rem; }
-.brand h1 span { color: var(--accent); }
+.brand h1 span { color: var(--rose); }
 .savebadge { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); }
 .tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; margin-top: 6px; }
 .tabs::-webkit-scrollbar { display: none; }
 .tab { flex: 0 0 auto; background: none; border: 0; border-bottom: 3px solid transparent; padding: 8px 12px 9px; color: var(--muted); font-weight: 700; font-size: 0.95rem; }
-.tab[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); }
+.tab[aria-current="page"] { color: var(--ink); border-bottom-color: var(--rose); }
 @media (max-width: 560px) {
   .tabs { justify-content: space-between; gap: 0; }
   .tab { padding: 8px 6px 9px; font-size: 0.86rem; }
@@ -79,8 +83,8 @@ main { max-width: 880px; margin: 0 auto; padding-left: max(16px, env(safe-area-i
 main > * { min-width: 0; }
 
 /* blocks */
-.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--r); padding: 16px; display: grid; gap: 12px; min-width: 0; }
-.stack { display: grid; gap: 12px; min-width: 0; }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: var(--r); padding: 16px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; min-width: 0; }
+.stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; min-width: 0; }
 .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .spread { display: flex; gap: 10px; align-items: baseline; justify-content: space-between; flex-wrap: wrap; }
 .lede { font-size: 1.05rem; max-width: 62ch; }
@@ -100,6 +104,9 @@ main > * { min-width: 0; }
 .chip.page { background: var(--hi); color: var(--hi-ink); border-color: transparent; }
 .chip.code { color: var(--accent); border-color: var(--accent); }
 .chip.ethics { border-style: dashed; white-space: normal; max-width: 100%; }
+.chip.slide { background: var(--rose-soft); color: var(--rose); border-color: transparent; }
+.badge.due { background: var(--warn-soft); color: var(--warn); }
+details.plain > summary { cursor: pointer; font-weight: 700; padding: 6px 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .cov { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--muted); }
 .cov::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
@@ -124,6 +131,7 @@ main > * { min-width: 0; }
 .task { display: grid; grid-template-columns: 3.4rem 1fr; gap: 2px 10px; padding: 10px 0; border-top: 1px solid var(--rule); text-align: left; background: none; border-left: 0; border-right: 0; border-bottom: 0; width: 100%; }
 .task .code { font-family: var(--font-mono); color: var(--accent); font-weight: 600; padding-top: 1px; }
 .task .lbl { font-weight: 700; }
+.task .code.unit { font-size: 0.8rem; white-space: nowrap; padding-top: 3px; color: var(--rose); }
 .task .meta { grid-column: 2; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
 details.domain > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: 2.2rem 1fr auto; gap: 12px; align-items: center; }
 details.domain > summary::-webkit-details-marker { display: none; }
@@ -152,7 +160,7 @@ ul.tight { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
 /* quiz */
 .qhead { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
 .progress { height: 4px; background: var(--grid); border-radius: 2px; overflow: hidden; }
-.progress > i { display: block; height: 100%; background: var(--accent); }
+.progress > i { display: block; height: 100%; background: var(--rose); }
 .stem { font-size: 1.08rem; max-width: 65ch; }
 .opts { display: grid; gap: 8px; }
 .opt { display: grid; grid-template-columns: 1.8rem 1fr; gap: 10px; text-align: left; border: 1px solid var(--rule); background: var(--sheet); border-radius: var(--r); padding: 11px 12px; align-items: start; }
@@ -176,10 +184,10 @@ ul.tight { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
 .mcell.cur { outline: 2px solid var(--ink); outline-offset: 1px; }
 .verdict { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; }
 .verdict.ok { color: var(--good); } .verdict.no { color: var(--bad); }
-.score { font-family: var(--font-display); font-size: 2.6rem; font-weight: 700; line-height: 1; }
+.score { font-family: var(--font-display); font-size: 2.6rem; font-weight: 700; line-height: 1; color: var(--rose); }
 
 /* flashcards */
-.flash { min-height: 13rem; border: 1px solid var(--rule); border-radius: 14px; background: var(--sheet); display: grid; place-items: center; text-align: center; padding: 24px 18px; cursor: pointer; background-image: linear-gradient(var(--grid) 1px, transparent 1px); background-size: 100% 1.9rem; background-position: 0 3.2rem; }
+.flash { min-height: 13rem; border: 1px solid var(--rule); border-radius: 14px; background: var(--sheet); display: grid; place-items: center; text-align: center; padding: 24px 18px; cursor: pointer; background-image: linear-gradient(var(--grid) 1px, transparent 1px); background-size: 100% 1.9rem; background-position: 0 3.2rem;  border-top: 3px solid var(--rose); }
 .flash .front { font-family: var(--font-display); font-size: 1.4rem; font-weight: 650; }
 .flash .back { font-size: 1.05rem; max-width: 44ch; }
 .boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
@@ -191,8 +199,8 @@ ul.tight { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
 .graph text { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; }
 .graph .axis { stroke: var(--ink); stroke-width: 1; fill: none; }
 .graph .gridl { stroke: var(--grid); stroke-width: 1; }
-.graph .path { stroke: var(--ink); stroke-width: 1.5; fill: none; }
-.graph .dot { fill: var(--ink); }
+.graph .path { stroke: var(--rose); stroke-width: 1.5; fill: none; }
+.graph .dot { fill: var(--rose); }
 .graph .crit { stroke: var(--accent); stroke-dasharray: 4 3; stroke-width: 1.2; }
 .graph .critlbl { fill: var(--accent); }
 .graph.ghost .path, .graph.ghost .dot { opacity: 0.28; }
@@ -215,7 +223,7 @@ textarea { width: 100%; min-height: 7rem; border: 1px solid var(--rule); border-
 .seg button { border: 0; background: none; border-radius: 999px; padding: 6px 12px; font-weight: 700; color: var(--muted); }
 .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 
-input[type="date"], select { border: 1px solid var(--rule); border-radius: 8px; padding: 6px 10px; background: var(--sheet); }
+input[type="date"], select { border: 1px solid var(--rule); border-radius: 8px; padding: 6px 10px; background: var(--sheet); max-width: 100%; }
 .kpi { font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; line-height: 1; }
 .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
 .two > * { min-width: 0; }
@@ -233,7 +241,7 @@ table.blue td.num, table.blue th.num { text-align: right; font-family: var(--fon
 
 .hub { display: grid; gap: 14px; }
 .tool { display: grid; gap: 8px; text-decoration: none; color: var(--ink); }
-.tool:hover { border-color: var(--accent); }
+.tool:hover { border-color: var(--rose); }
 .tool h2 { color: var(--accent); }
 </style>
 <header class="top"><div class="top-inner" style="padding-block: 14px 12px"><div class="brand"><h1>BCaBA <span>Study Guide</span></h1></div></div></header>
@@ -250,7 +258,7 @@ table.blue td.num, table.blue th.num { text-align: right; font-family: var(--fon
     <a class="sheet tool" href="classes.html">
       <span class="eyebrow">For your classes</span>
       <h2>Cooper Class Companion</h2>
-      <p>A plain-language guide to every chapter with page numbers, key terms, common mix-ups, a 10-question check per chapter, and Ask to simplify a page you photograph.</p>
+      <p>A plain-language guide to every chapter with page numbers, key terms, common mix-ups, a 10-question check per chapter, study guides and quizzes for your class units, and Ask to simplify a page you photograph.</p>
     </a>
   </section>
   <section class="sheet">
